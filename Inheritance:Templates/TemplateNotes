@@ -1,0 +1,14 @@
+Template type
+- a special type that can take on different types when the type is initialized
+
+
+
+std::vector - standard library class that provides the functionality of a dynamically growing arary with a "template" type. 
+key ideas: 
+
+Defined in:              #inlcude <vector>
+Initialization:          std::vector<T>v;
+Add to back of array        ::push_back(T);
+Access specific element     ::operator{}(unsigned pos);
+Number of elements          ::size()
+
