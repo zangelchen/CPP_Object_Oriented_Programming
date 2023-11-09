@@ -1,0 +1,85 @@
+Types of Variables
+1. Primitive
+    a. int - integer
+    b. bool - true/false
+    c. double - decimals (4 bytes)
+    d. float - decimals too but (8 bytes)
+    e. void - no value  
+    f. char - single characters (1 byte)
+2. User-defined
+    a. std::string - dequence of characters 
+    b. std::vector - dynamically growing arrays 
+    
+
+******************HEADER FILES******************
+
+4 Characteristics
+
+#pragma once - always run it once
+
+class Cube { 
+    public: 
+        double getVolume();
+        double getSurfaceArea();
+        void setLength(double length);
+
+    private:
+    double length_;
+};
+
+General form: -------------------------------
+
+class NAME {
+    public: 
+        type Function header;
+        type Function header (type variable);
+    private:
+        type Function header;
+        type Function header (type variable);   
+}; 
+
+******************CPP File ******************
+-> logic for implementation of header file
+#include "Cube.hpp"
+
+double Cube::getVolume(){
+    return length_ * length_ * length_;
+}
+double Cube::setVolume(){
+    return 6 * length_ * length_;
+}
+void Cube::setLength(double length){
+    length_=length_;
+ }
+
+ General Form:-------------------------------- 
+
+ type class::header(){
+    return function details
+ }
+
+ type class::header(type variable){
+    return function details
+ }
+
+***************** MAIN File ******************
+
+int main()
+{
+    Cube c; 
+
+    c.setLength(3.48);
+    double volume = c.getVolume();
+    cout << "volume: " << volume << endl;
+    return 0
+ }
+
+ General Form:-------------------------------- 
+
+int main()
+{
+    Class variable;
+    variable.function(input);
+    type output=variable.function();
+    cout << "name: " << output << endl;
+}
