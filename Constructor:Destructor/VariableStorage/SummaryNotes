@@ -1,0 +1,127 @@
+*********************************************** STORAGE ***********************************************
+
+Direct STORAGE - stored directly in memory
+
+[Ex]
+    Cube c;                 //stores a Cube in memory
+    int i;                  //stores an integer in memory
+    uiuc::HSLAPixel p;      //stores a pixel in memory 
+
+Storage by POINTER (*) - "points" to the allocated space of the object
+
+[Ex]
+    Cube *c;                //Pointer to a Cube in memory
+    int *i;                 //Pointer to an integer in memory
+    UIUC::HSLAPixel p;      //Pointer to a pixel in memory
+
+Storage by REFERENCE (&) - "alias" to existing memory and does NOT store memory itself, MUST BE assigned
+
+[Ex]
+    Cube &c = cube;         //Alias to the variable 'cube'
+    int &i = count;         //Alias to an variabe 'i'
+    UIUC::HSLAPixel &p;     //Illegal! 
+
+*********************************************** PASS BY ***********************************************
+
+Identical to storage but more like we are transfering the money. Pass the reference of an argument
+in the calling function to the corresponding formal paramenter of the called function
+
+Aka, the function is separate from the main function. Main function is just the index that indicates the 
+order of which the functions are executed. 
+
+Pass by VALUE
+Pass by POINTER
+Pass by REFERENCE
+
+
+---------------------------------------- CUBE CURRENCY EXAMPLE ----------------------------------------
+
+Suppose our cubes have a value ot them, based on their volume. 1^3 = $1, 5^3 = $125, 10^3 = $1000
+When we receive money, we want the cube itself, not a copy of the cube
+
+//CPP FILE USED
+  Cube::Cube(double length) {                                        //default constructor - one parameter          
+    length_ = length;                                                //whenever we call the constructor, we're creating money
+    std::cout << "Created $" << getVolume() << std::endl;
+  }
+
+  Cube::Cube(const Cube & obj) {                                    //copy constructor takes in a cube by reference (hence &obj)
+    length_ = obj.length_;
+    std::cout << "Created $" << getVolume() << " via copy" << std::endl;
+  }
+
+  Cube & Cube::operator=(const Cube & obj) {                        //assignment operator transforms from volume before to volume after. it's growing or shrinking cube
+    std::cout << "Transformed $" << getVolume() << "-> $" << obj.getVolume() << std::endl;
+    length_ = obj.length_;
+    return *this;
+
+---------------------------------------- DIRECT STORAGE (Value) ----------------------------------------
+int main() {
+  Cube c(10);                       //Create $1000 -> DEFAULT CONSTR INVOKED
+
+  Cube myCube = c;                  // Transfer the cube to myCube -> COPY CONSTRUCTOR INVOKED 
+
+  return 0;                         // OUTPUT: $1000 created, $1000 created via copy => total $2000
+}
+
+---------------------------------------- STORAGE by POINTER ----------------------------------------
+
+int main() {
+  Cube c(10);                      //Create $1000 -> DEFAULT CONSTR INVOKED
+
+  Cube * myCube = &c;              // dereference value (*) of pointer (myCube) which points to the address of c (&c) where the $1,000 is stored
+
+  return 0;                        // OUTPUT: $1000 created once
+}
+
+---------------------------------------- STORAGE by REFERENCE ------------------------------------------
+
+int main() {
+  Cube c(10);                      //Create $1000 -> DEFAULT CONSTR INVOKED
+
+  Cube & myCube = c;               //Transfer the value. the reference (&) variable (myCube) is referring to $1,000 (c). DOES NOT store it in memory itself
+
+  return 0;                        // OUTPUT: $1000 created once
+
+}
+
+---------------------------------- PASS BY VALUE (DEFAULT/DIRECT) ----------------------------------------
+
+int main() {
+  Cube c(10);                      //Create $1000 -> DEFAULT CONSTR INVOKED
+
+  sendCube(c);                     //Execute sendCube function below
+
+  return 0;                        // OUTPUT: $1000 created, $1000 created via copy => total $2000
+}
+
+bool sendCube(Cube c) {    
+  return true;                     //FUNCTION - executes "create" and "create via copy"
+}
+
+------------------------------------------ PASS BY POINTER -----------------------------------------------
+
+int main() {
+  Cube c(10);                      //Create $1000 -> DEFAULT CONSTR INVOKED
+
+  sendCube(&c);                    //Execute sendCube function below
+
+  return 0;                        // OUTPUT: $1000 created
+}
+
+bool sendCube(Cube * c) {          //Executes: Cube *c= &c
+  return true;
+}
+
+----------------------------------------- PASS BY REFERENCE -----------------------------------------------
+
+int main() {
+  Cube c(10);                      //Create $1000 -> DEFAULT CONSTR INVOKED
+
+  sendCube(c);                     //Execute sendCube function below
+
+  return 0;                        // OUTPUT: $1000 created
+}
+bool sendCube(Cube & c) {          //Executes: (Cube & c) - reference c which is $1,000
+  return true;
+}
